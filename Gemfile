@@ -30,7 +30,7 @@ gem 'jbuilder', '~> 2.5'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-
+gem 'sidekiq', '~> 5.0'
 gem 'httparty', '~> 0.15.6'
 
 group :development, :test do
