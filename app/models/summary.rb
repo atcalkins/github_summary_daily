@@ -1,5 +1,4 @@
-class Summary < ApplicationRecord
-  validates :username, uniqueness: true
+class Summary < ApplicationRecord 
   include HTTParty
   GITHUB_API_URL="https://api.github.com"
 
