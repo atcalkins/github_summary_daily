@@ -1,4 +1,4 @@
-class Summary < ApplicationRecord 
+class Summary < ApplicationRecord
   include HTTParty
   GITHUB_API_URL="https://api.github.com"
 
@@ -35,13 +35,7 @@ class Summary < ApplicationRecord
   def ready?
     repos_response.present? && user_response.present?
   end
-
-
-
-  def access_token
-    "?access_token=#{ENV["GITHUB_PERSONAL_ACCESS_TOKEN"]}"
-  end
-
+  
   def authenticated_get(url)
     HTTParty.get(url, headers: {
       authorization: "token #{ENV["GITHUB_PERSONAL_ACCESS_TOKEN"]}",
