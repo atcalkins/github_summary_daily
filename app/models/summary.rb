@@ -1,6 +1,6 @@
 class Summary < ApplicationRecord
   validates :username, uniqueness: true
-
+  include HTTParty
   GITHUB_API_URL="https://api.github.com"
 
   def user
@@ -33,6 +33,12 @@ class Summary < ApplicationRecord
     self.repos_response = response.to_a
   end
 
+  def ready?
+    repos_response.present? && user_response.present?
+  end
+
+
+
   def access_token
     "?access_token=#{ENV["GITHUB_PERSONAL_ACCESS_TOKEN"]}"
   end
@@ -43,9 +49,4 @@ class Summary < ApplicationRecord
       "User-Agent": 'atcalkins'
     })
   end
-
-  def ready?
-    repos_response.present?
-  end
-  
 end

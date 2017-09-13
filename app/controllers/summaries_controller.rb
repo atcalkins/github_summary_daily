@@ -6,20 +6,17 @@ class SummariesController < ApplicationController
   end
 
   def show
-    LoadingPageJob.perform_later(@summary)
     @summary = Summary.find_or_create_by(username: params[:username])
-    if @summary.user_response == nil
-      @summary.get_user
-      @summary.get_repos
-      @summary.save
+    if request.xhr?
+      if @summary.ready?
+        head 200
+      else
+        head 202
+      end
+    else
+      if !@summary.ready?
+        LoadingPageJob.perform_later(@summary)
+      end
     end
-    if @summary.repos_response == nil
-      @sumamry.get_repos
-      @summary.save
-    end
-    @username = @summary.username
-    @user = @summary.user
-    @repos = @summary.repos
-    @languages = @summary.languages
   end
 end
